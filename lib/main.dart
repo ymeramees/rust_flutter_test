@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rinf/rinf.dart';
 import './messages/all.dart';
+import 'package:file_picker/file_picker.dart';
 
 void main() async {
   await initializeRust(assignRustSignal);
@@ -70,6 +71,48 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _openFile() async {
+    // Lets the user pick one file, but only files with the extensions `svg` and `pdf` can be selected
+    FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.custom, allowedExtensions: ['svg', 'pdf']);
+
+    // The result will be null, if the user aborted the dialog
+    if(result != null) {
+      String? fileName = result.files.first.path;
+
+      if (fileName != null) {
+      _showDialog(fileName);
+      }
+    }
+  }
+
+  Future<void> _showDialog(String fileName) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('AlertDialog Title'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Open File'),
+                Text('File name: $fileName'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -121,6 +164,11 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text('Send a Signal from Dart to Rust'),
             ),
+            FloatingActionButton(
+              onPressed: _openFile,
+              tooltip: 'Show Open File dialog',
+              child: const Icon(Icons.file_open),
+            ), // This trailing comma makes auto-formatting nicer for build methods.
             StreamBuilder(
               stream: MyAmazingNumber.rustSignalStream, // GENERATED
               builder: (context, snapshot) {
