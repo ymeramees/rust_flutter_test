@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -111,6 +111,27 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                MyPreciousData(
+                  inputNumbers: [3, 4, 5],
+                  inputString: 'Zero-cost abstraction',
+                ).sendSignalToRust(); // GENERATED
+              },
+              child: Text('Send a Signal from Dart to Rust'),
+            ),
+            StreamBuilder(
+              stream: MyAmazingNumber.rustSignalStream, // GENERATED
+              builder: (context, snapshot) {
+                final rustSignal = snapshot.data;
+                if (rustSignal == null) {
+                  return Text('Nothing received yet');
+                }
+                final myAmazingNumber = rustSignal.message;
+                final currentNumber = myAmazingNumber.currentNumber;
+                return Text(currentNumber.toString());
+              },
             ),
           ],
         ),
