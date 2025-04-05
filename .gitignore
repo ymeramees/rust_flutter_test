@@ -52,5 +52,6 @@ app.*.map.json
 target/
 
 # Generated messages
-*/**/messages/
-lib/src/bindings
+/lib/src/bincode
+/lib/src/serde
+/lib/src/bindings
