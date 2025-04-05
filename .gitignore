@@ -11,6 +11,9 @@
 .svn/
 .swiftpm/
 migrate_working_dir/
+.vscode
+.aider.input.history
+.aider.tags.cache.v4/
 
 # IntelliJ related
 *.iml
@@ -50,3 +53,4 @@ target/
 
 # Generated messages
 */**/messages/
+lib/src/bindings

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rinf/rinf.dart';
-import './messages/all.dart';
+import './src/bindings/bindings.dart';
 import 'package:file_picker/file_picker.dart';
 
 void main() async {

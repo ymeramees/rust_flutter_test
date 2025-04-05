@@ -1,6 +1,7 @@
 use crate::messages::*;
 use rinf::debug_print;
 use std::time::Duration;
+use rinf::{DartSignal, RustSignal};
 
 pub async fn calculate_precious_data() {
     let receiver = MyPreciousData::get_dart_signal_receiver(); // GENERATED

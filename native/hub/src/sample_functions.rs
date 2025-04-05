@@ -1,4 +1,5 @@
 //! This module is written for Rinf demonstrations.
+use rinf::{DartSignal, RustSignal};
 
 use crate::messages::*;
 
